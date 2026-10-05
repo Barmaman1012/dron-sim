@@ -2,6 +2,7 @@ import numpy as np
 
 from physics.rigid_body import RigidBody
 from physics.dynamics import compute_dynamics
+from physics.integrator import integrate
 
 
 body = RigidBody(
@@ -14,12 +15,12 @@ body.dynamics.force = np.array(
     dtype=np.float64,
 )
 
-body.dynamics.torque = np.array(
-    [0.0, 0.0, 0.4],
-    dtype=np.float64,
-)
+dt = 0.01
 
-compute_dynamics(body)
+for step in range(100):
+    compute_dynamics(body)
+    integrate(body, dt)
 
+print("Position:", body.state.position)
+print("Velocity:", body.state.velocity)
 print("Acceleration:", body.dynamics.acceleration)
-print("Angular acceleration:", body.dynamics.angular_acceleration)
