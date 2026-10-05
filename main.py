@@ -1,9 +1,11 @@
-from simulation import Simulation
+import numpy as np
+
+from physics.rigid_body import RigidBody
 
 
-sim = Simulation(
-    dt=0.01,
-    duration=10.0,
+body = RigidBody(
+    mass=2.0,
+    inertia_tensor=np.diag([0.02, 0.02, 0.04]),
 )
 
-sim.run()
+print(body)
