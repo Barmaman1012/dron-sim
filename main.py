@@ -1,7 +1,6 @@
 import numpy as np
 
 from physics.rigid_body import RigidBody
-from physics.dynamics import compute_dynamics
 from physics.integrator import integrate
 
 
@@ -10,17 +9,16 @@ body = RigidBody(
     inertia_tensor=np.diag([0.02, 0.02, 0.04]),
 )
 
-body.dynamics.force = np.array(
-    [10.0, 0.0, 0.0],
+body.state.angular_velocity = np.array(
+    [0.0, 0.0, 1.0],
     dtype=np.float64,
 )
 
 dt = 0.01
 
 for step in range(100):
-    compute_dynamics(body)
     integrate(body, dt)
 
-print("Position:", body.state.position)
-print("Velocity:", body.state.velocity)
-print("Acceleration:", body.dynamics.acceleration)
+print("Angular velocity:", body.state.angular_velocity)
+print("Orientation:", body.state.orientation)
+print("Quaternion norm:", np.linalg.norm(body.state.orientation))
